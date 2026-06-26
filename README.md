@@ -19,7 +19,7 @@ The prediction is based on four key features:
 - Petal Length
 - Petal Width
 
----
+-------
 
 # 🧠 Machine Learning Approach
 
