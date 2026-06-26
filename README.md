@@ -64,7 +64,7 @@ Clone the repository and install dependencies:
 
 # ▶️ Usage
 
-Run the main script:
+- Run the main script:
 
 - python main.py
 
