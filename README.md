@@ -1,95 +1,101 @@
-# 🌸 Iris Flower Prediction
 
-A sleek and beginner-friendly Machine Learning project that predicts the species of an iris flower based on its physical features. This project demonstrates the full ML workflow — from data exploration to model training and evaluation.
+🌸 Iris Flower Prediction
 
----
+A machine learning project that predicts the species of an iris flower based on its measurements. This project uses the famous Iris dataset and demonstrates the complete workflow of data preprocessing, model training, evaluation, and prediction.
 
-# 🚀 Overview
+📌 Features
 
-The Iris Flower Prediction project uses a classic dataset to classify iris flowers into three species:
+- Predicts Iris flower species
+- Uses the Iris dataset
+- Data preprocessing and visualization
+- Machine learning model training
+- Model evaluation
+- Easy-to-use prediction script
 
-- Setosa
-- Versicolor
-- Virginica
+🌼 Dataset
 
-The prediction is based on four key features:
+The Iris dataset contains 150 samples with the following features:
 
-- Sepal Length
-- Sepal Width
-- Petal Length
-- Petal Width
+- Sepal Length (cm)
+- Sepal Width (cm)
+- Petal Length (cm)
+- Petal Width (cm)
 
--------
+Target classes:
 
-# 🧠 Machine Learning Approach
+- Iris Setosa
+- Iris Versicolor
+- Iris Virginica
 
-This project applies supervised learning classification algorithms to build an accurate predictive model. Typical steps include:
+🛠️ Technologies Used
 
-1. Data loading and preprocessing
-2. Exploratory Data Analysis (EDA)
-3. Feature selection
-4. Model training
-5. Evaluation and prediction
+- Python
+- NumPy
+- Pandas
+- Matplotlib
+- Scikit-learn
+- Jupyter Notebook (optional)
 
----
+📂 Project Structure
 
-# 🛠️ Tech Stack
+iris-flower-prediction/
+│── data/
+│── model/
+│── notebook.ipynb
+│── train.py
+│── predict.py
+│── requirements.txt
+│── README.md
 
-- Python 🐍
-- NumPy & Pandas – Data manipulation
-- Matplotlib / Seaborn – Data visualization
-- Scikit-learn – Machine learning models
+🚀 Installation
 
----
+git clone https://github.com/your-username/iris-flower-prediction.git
+cd iris-flower-prediction
+pip install -r requirements.txt
 
-# Dataset
+▶️ Run the Project
 
-The dataset used is the famous Iris Dataset, which is:
+Train the model:
 
-- Small and clean
-- Perfect for beginners
-- Widely used for classification tasks
+python train.py
 
----
+Run predictions:
 
-# ⚙️ Installation
+python predict.py
 
-Clone the repository and install dependencies:
+📊 Model Performance
 
-- git clone https://github.com/himanshux64/iris-flower-prediction.git
-- cd iris-flower-prediction
-- pip install -r requirements.txt
+Evaluate the model using metrics such as:
 
----
+- Accuracy
+- Precision
+- Recall
+- F1 Score
+- Confusion Matrix
 
-# ▶️ Usage
-
-- Run the main script:
-
-- python main.py
-
-
-
----
-
-# 📈 Model Performance
-
-The model typically achieves high accuracy due to the simplicity and quality of the dataset. You can experiment with:
-
-- RandomforestClassifier
-
----
-
-# 🔍 Example Prediction
+🎯 Example Prediction
 
 Input:
 
-Sepal Length: 5.1  
-Sepal Width: 3.5  
-Petal Length: 1.4  
-Petal Width: 0.2  
+Sepal Length: 5.1
+Sepal Width: 3.5
+Petal Length: 1.4
+Petal Width: 0.2
 
 Output:
 
-Predicted Species: Setosa 🌸
+Predicted Species: Iris Setosa
 
+🤝 Contributing
+
+Contributions are welcome! Feel free to fork the repository, create a new branch, and submit a pull request.
+
+📄 License
+
+This project is licensed under the MIT License.
+
+👨‍💻 Author
+
+Himanshu
+
+If you found this project helpful, consider giving it a ⭐ on GitHub.
