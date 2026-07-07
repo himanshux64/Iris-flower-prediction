@@ -49,9 +49,10 @@ iris-flower-prediction/
 
 🚀 Installation
 
-git clone https://github.com/your-username/iris-flower-prediction.git
-cd iris-flower-prediction
-pip install -r requirements.txt
+- git clone
+https://github.com/himanshux64/iris-flower-prediction.git
+- cd iris-flower-prediction
+- pip install -r requirements.txt
 
 ▶️ Run the Project
 
