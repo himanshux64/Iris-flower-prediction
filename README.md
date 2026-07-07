@@ -3,7 +3,7 @@
 
 A machine learning project that predicts the species of an iris flower based on its measurements. This project uses the famous Iris dataset and demonstrates the complete workflow of data preprocessing, model training, evaluation, and prediction.
 
-#📌 Features
+📌 Features
 
 - Predicts Iris flower species
 - Uses the Iris dataset
@@ -12,7 +12,7 @@ A machine learning project that predicts the species of an iris flower based on 
 - Model evaluation
 - Easy-to-use prediction script
 
-🌼 Dataset
+#🌼 Dataset
 
 The Iris dataset contains 150 samples with the following features:
 
