@@ -12,7 +12,7 @@ A machine learning project that predicts the species of an iris flower based on 
 - Model evaluation
 - Easy-to-use prediction script
 
-##🌼 Dataset
+## 🌼 Dataset
 
 The Iris dataset contains 150 samples with the following features:
 
@@ -27,7 +27,7 @@ Target classes:
 - Iris Versicolor
 - Iris Virginica
 
-🛠️ Technologies Used
+## 🛠️ Technologies Used
 
 - Python
 - NumPy
@@ -36,7 +36,7 @@ Target classes:
 - Scikit-learn
 - Jupyter Notebook (optional)
 
-📂 Project Structure
+## 📂 Project Structure
 
 iris-flower-prediction/
 │── data/
@@ -47,7 +47,7 @@ iris-flower-prediction/
 │── requirements.txt
 │── README.md
 
-🚀 Installation
+## 🚀 Installation
 
 - git clone
 https://github.com/himanshux64/iris-flower-prediction.git
@@ -87,7 +87,7 @@ Output:
 
 Predicted Species: Iris Setosa
 
-🤝 Contributing
+## 🤝 Contributing
 
 Contributions are welcome! Feel free to fork the repository, create a new branch, and submit a pull request.
 
