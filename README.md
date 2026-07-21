@@ -58,13 +58,13 @@ https://github.com/himanshux64/iris-flower-prediction.git
 
 ▶️ Run the Project
 
-Train the model:
+- Train the model:
 
-python train.py
+- python train.py
 
-Run predictions:
+### Run predictions:
 
-python predict.py
+- python predict.py
 
 📊 Model Performance
 
