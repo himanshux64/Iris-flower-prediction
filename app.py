@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 # Load ML Model safely
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-model_path = os.path.join(BASE_DIR, 'iris_model.pkl')
+model_path = os.path.join(BASE_DIR, 'iris_model_new.pkl')
 model = joblib.load(model_path)
 
 # Initialize DB
