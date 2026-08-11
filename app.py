@@ -1,20 +1,59 @@
-from flask import Flask, render_template, request, redirect
-import sqlite3
-import joblib
 import os
+import sqlite3
 
-app = Flask(__name__)
+import joblib
+from flask import Flask, render_template, request, redirect, url_for
 
-# Load ML Model safely
+
+# =========================================================
+# Flask Configuration
+# =========================================================
+
+app = Flask(
+    __name__,
+    static_folder="static",
+    template_folder="templates"
+)
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-model_path = os.path.join(BASE_DIR, 'iris_model_new.pkl')
-model = joblib.load(model_path)
 
-# Initialize DB
+DATABASE_PATH = os.path.join(BASE_DIR, "IrisDatabase.db")
+MODEL_PATH = os.path.join(BASE_DIR, "iris_model_new.pkl")
+
+
+# =========================================================
+# Load ML Model
+# =========================================================
+
+if not os.path.exists(MODEL_PATH):
+    raise FileNotFoundError(
+        f"ML model not found at: {MODEL_PATH}"
+    )
+
+model = joblib.load(MODEL_PATH)
+
+
+# =========================================================
+# Database Helper
+# =========================================================
+
+def get_db_connection():
+    """
+    Create and return a SQLite database connection.
+    """
+    conn = sqlite3.connect(DATABASE_PATH)
+    conn.row_factory = sqlite3.Row
+    return conn
+
+
+# =========================================================
+# Initialize Database
+# =========================================================
+
 def init_db():
-    conn = sqlite3.connect('IrisDatabase.db')
-    cursor = conn.cursor()
-    cursor.execute('''
+    conn = get_db_connection()
+
+    conn.execute("""
         CREATE TABLE IF NOT EXISTS iris_data (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             sepal_length REAL,
@@ -23,74 +62,206 @@ def init_db():
             petal_width REAL,
             variety TEXT
         )
-    ''')
+    """)
+
     conn.commit()
     conn.close()
+
 
 init_db()
 
+
+# =========================================================
 # Home
-@app.route('/')
+# =========================================================
+
+@app.route("/")
 def home():
-    conn = sqlite3.connect('IrisDatabase.db')
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM iris_data")
-    iris_data = cursor.fetchall()
+    conn = get_db_connection()
+
+    iris_data = conn.execute("""
+        SELECT *
+        FROM iris_data
+        ORDER BY id DESC
+    """).fetchall()
+
     conn.close()
-    return render_template('index.html', iris_data=iris_data)
 
-# Add Data
-@app.route('/add', methods=['POST'])
-def add():
-    sepal_length = float(request.form['sepal_length'])
-    sepal_width = float(request.form['sepal_width'])
-    petal_length = float(request.form['petal_length'])
-    petal_width = float(request.form['petal_width'])
-    variety = request.form['variety']
-
-    conn = sqlite3.connect('IrisDatabase.db')
-    cursor = conn.cursor()
-    cursor.execute(
-        "INSERT INTO iris_data (sepal_length, sepal_width, petal_length, petal_width, variety) VALUES (?, ?, ?, ?, ?)",
-        (sepal_length, sepal_width, petal_length, petal_width, variety)
+    return render_template(
+        "index.html",
+        iris_data=iris_data
     )
-    conn.commit()
-    conn.close()
 
-    return redirect('/')
 
+# =========================================================
+# Add Data
+# =========================================================
+
+@app.route("/add", methods=["POST"])
+def add():
+
+    try:
+        sepal_length = float(request.form["sepal_length"])
+        sepal_width = float(request.form["sepal_width"])
+        petal_length = float(request.form["petal_length"])
+        petal_width = float(request.form["petal_width"])
+        variety = request.form["variety"]
+
+        conn = get_db_connection()
+
+        conn.execute("""
+            INSERT INTO iris_data (
+                sepal_length,
+                sepal_width,
+                petal_length,
+                petal_width,
+                variety
+            )
+            VALUES (?, ?, ?, ?, ?)
+        """, (
+            sepal_length,
+            sepal_width,
+            petal_length,
+            petal_width,
+            variety
+        ))
+
+        conn.commit()
+        conn.close()
+
+        return redirect(url_for("home"))
+
+    except (ValueError, KeyError):
+        return redirect(url_for("home"))
+
+
+# =========================================================
 # Delete Data
-@app.route('/delete/<int:id>')
+# =========================================================
+
+@app.route("/delete/<int:id>")
 def delete(id):
-    conn = sqlite3.connect('IrisDatabase.db')
-    cursor = conn.cursor()
-    cursor.execute("DELETE FROM iris_data WHERE id=?", (id,))
+
+    conn = get_db_connection()
+
+    conn.execute(
+        """
+        DELETE FROM iris_data
+        WHERE id = ?
+        """,
+        (id,)
+    )
+
     conn.commit()
     conn.close()
 
-    return redirect('/')
+    return redirect(url_for("home"))
 
-# Predict
-@app.route('/predict', methods=['POST'])
+
+# =========================================================
+# Predict Iris Species
+# =========================================================
+
+@app.route("/predict", methods=["POST"])
 def predict():
-    sepal_length = float(request.form['sepal_length'])
-    sepal_width = float(request.form['sepal_width'])
-    petal_length = float(request.form['petal_length'])
-    petal_width = float(request.form['petal_width'])
 
-    result = model.predict([[sepal_length, sepal_width, petal_length, petal_width]])[0]
+    try:
 
-    # Proper labels
-    labels = ['Setosa', 'Versicolor', 'Virginica']
-    output = labels[result]
+        # ---------------------------------------------
+        # Get input values
+        # ---------------------------------------------
 
-    conn = sqlite3.connect('IrisDatabase.db')
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM iris_data")
-    iris_data = cursor.fetchall()
-    conn.close()
+        sepal_length = float(
+            request.form["sepal_length"]
+        )
 
-    return render_template('index.html', iris_data=iris_data, prediction=output)
+        sepal_width = float(
+            request.form["sepal_width"]
+        )
 
-if __name__ == '__main__':
-    app.run(debug=True)
+        petal_length = float(
+            request.form["petal_length"]
+        )
+
+        petal_width = float(
+            request.form["petal_width"]
+        )
+
+        # ---------------------------------------------
+        # ML Prediction
+        # ---------------------------------------------
+
+        result = model.predict([
+            [
+                sepal_length,
+                sepal_width,
+                petal_length,
+                petal_width
+            ]
+        ])[0]
+
+        # ---------------------------------------------
+        # Convert prediction to species name
+        # ---------------------------------------------
+
+        labels = [
+            "Setosa",
+            "Versicolor",
+            "Virginica"
+        ]
+
+        output = labels[int(result)]
+
+        # ---------------------------------------------
+        # Fetch database records
+        # ---------------------------------------------
+
+        conn = get_db_connection()
+
+        iris_data = conn.execute("""
+            SELECT *
+            FROM iris_data
+            ORDER BY id DESC
+        """).fetchall()
+
+        conn.close()
+
+        # ---------------------------------------------
+        # Render result
+        # ---------------------------------------------
+
+        return render_template(
+            "index.html",
+            iris_data=iris_data,
+            prediction=output
+        )
+
+    except (ValueError, KeyError, IndexError):
+
+        conn = get_db_connection()
+
+        iris_data = conn.execute("""
+            SELECT *
+            FROM iris_data
+            ORDER BY id DESC
+        """).fetchall()
+
+        conn.close()
+
+        return render_template(
+            "index.html",
+            iris_data=iris_data,
+            error="Please enter valid flower measurements."
+        )
+
+
+# =========================================================
+# Run Flask Application
+# =========================================================
+
+if __name__ == "__main__":
+    app.run(
+        debug=True,
+        host="127.0.0.1",
+        port=5000
+    )
