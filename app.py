@@ -27,28 +27,21 @@ MODEL_PATH = os.path.join(BASE_DIR, "iris_model_new.pkl")
 
 if not os.path.exists(MODEL_PATH):
     raise FileNotFoundError(
-        f"ML model not found at: {MODEL_PATH}"
+        f"ML model not found: {MODEL_PATH}"
     )
 
 model = joblib.load(MODEL_PATH)
 
 
 # =========================================================
-# Database Helper
+# Database
 # =========================================================
 
 def get_db_connection():
-    """
-    Create and return a SQLite database connection.
-    """
     conn = sqlite3.connect(DATABASE_PATH)
     conn.row_factory = sqlite3.Row
     return conn
 
-
-# =========================================================
-# Initialize Database
-# =========================================================
 
 def init_db():
     conn = get_db_connection()
@@ -56,11 +49,11 @@ def init_db():
     conn.execute("""
         CREATE TABLE IF NOT EXISTS iris_data (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            sepal_length REAL,
-            sepal_width REAL,
-            petal_length REAL,
-            petal_width REAL,
-            variety TEXT
+            sepal_length REAL NOT NULL,
+            sepal_width REAL NOT NULL,
+            petal_length REAL NOT NULL,
+            petal_width REAL NOT NULL,
+            variety TEXT NOT NULL
         )
     """)
 
@@ -72,14 +65,13 @@ init_db()
 
 
 # =========================================================
-# Home
+# Helper: Get Database Records
 # =========================================================
 
-@app.route("/")
-def home():
+def get_iris_data():
     conn = get_db_connection()
 
-    iris_data = conn.execute("""
+    data = conn.execute("""
         SELECT *
         FROM iris_data
         ORDER BY id DESC
@@ -87,25 +79,222 @@ def home():
 
     conn.close()
 
+    return data
+
+
+# =========================================================
+# Helper: Convert Model Prediction
+# =========================================================
+
+def get_species_name(prediction):
+    """
+    Handles models that return either:
+        0, 1, 2
+    or:
+        'setosa', 'versicolor', 'virginica'
+    """
+
+    # Convert numpy values / other scalar values to Python value
+    try:
+        prediction = prediction.item()
+    except AttributeError:
+        pass
+
+    # If model returns numeric class
+    if isinstance(prediction, (int, float)):
+        labels = {
+            0: "Iris Setosa",
+            1: "Iris Versicolor",
+            2: "Iris Virginica"
+        }
+
+        prediction = int(prediction)
+
+        if prediction in labels:
+            return labels[prediction]
+
+    # If model returns string class
+    prediction_string = str(prediction).strip().lower()
+
+    label_map = {
+        "setosa": "Iris Setosa",
+        "iris setosa": "Iris Setosa",
+
+        "versicolor": "Iris Versicolor",
+        "iris versicolor": "Iris Versicolor",
+
+        "virginica": "Iris Virginica",
+        "iris virginica": "Iris Virginica"
+    }
+
+    if prediction_string in label_map:
+        return label_map[prediction_string]
+
+    # Fallback
+    return str(prediction)
+
+
+# =========================================================
+# HOME
+# =========================================================
+
+@app.route("/")
+def home():
+
+    iris_data = get_iris_data()
+
     return render_template(
         "index.html",
-        iris_data=iris_data
+        iris_data=iris_data,
+        prediction=None,
+        error=None
     )
 
 
 # =========================================================
-# Add Data
+# PREDICT
+# =========================================================
+
+@app.route("/predict", methods=["POST"])
+def predict():
+
+    try:
+
+        # ---------------------------------------------
+        # Get form values
+        # ---------------------------------------------
+
+        sepal_length = float(
+            request.form.get("sepal_length", "").strip()
+        )
+
+        sepal_width = float(
+            request.form.get("sepal_width", "").strip()
+        )
+
+        petal_length = float(
+            request.form.get("petal_length", "").strip()
+        )
+
+        petal_width = float(
+            request.form.get("petal_width", "").strip()
+        )
+
+        # ---------------------------------------------
+        # Basic validation
+        # ---------------------------------------------
+
+        values = [
+            sepal_length,
+            sepal_width,
+            petal_length,
+            petal_width
+        ]
+
+        if any(value <= 0 for value in values):
+            raise ValueError("Measurements must be positive.")
+
+        # ---------------------------------------------
+        # ML Prediction
+        # ---------------------------------------------
+
+        features = [[
+            sepal_length,
+            sepal_width,
+            petal_length,
+            petal_width
+        ]]
+
+        result = model.predict(features)[0]
+
+        # ---------------------------------------------
+        # Convert prediction to species
+        # ---------------------------------------------
+
+        output = get_species_name(result)
+
+        # ---------------------------------------------
+        # Database records
+        # ---------------------------------------------
+
+        iris_data = get_iris_data()
+
+        # ---------------------------------------------
+        # Render result
+        # ---------------------------------------------
+
+        return render_template(
+            "index.html",
+            iris_data=iris_data,
+            prediction=output,
+            error=None,
+
+            # Send measurements to template
+            prediction_measurements={
+                "sepal_length": sepal_length,
+                "sepal_width": sepal_width,
+                "petal_length": petal_length,
+                "petal_width": petal_width
+            }
+        )
+
+    except (ValueError, TypeError, KeyError) as error:
+
+        print("Prediction error:", error)
+
+        iris_data = get_iris_data()
+
+        return render_template(
+            "index.html",
+            iris_data=iris_data,
+            prediction=None,
+            error="Please enter valid flower measurements."
+        )
+
+
+    except Exception as error:
+
+        print("ML prediction error:", error)
+
+        iris_data = get_iris_data()
+
+        return render_template(
+            "index.html",
+            iris_data=iris_data,
+            prediction=None,
+            error="Unable to make prediction. Please try again."
+        )
+
+
+# =========================================================
+# ADD DATA
 # =========================================================
 
 @app.route("/add", methods=["POST"])
 def add():
 
     try:
-        sepal_length = float(request.form["sepal_length"])
-        sepal_width = float(request.form["sepal_width"])
-        petal_length = float(request.form["petal_length"])
-        petal_width = float(request.form["petal_width"])
-        variety = request.form["variety"]
+
+        sepal_length = float(
+            request.form.get("sepal_length", "").strip()
+        )
+
+        sepal_width = float(
+            request.form.get("sepal_width", "").strip()
+        )
+
+        petal_length = float(
+            request.form.get("petal_length", "").strip()
+        )
+
+        petal_width = float(
+            request.form.get("petal_width", "").strip()
+        )
+
+        variety = request.form.get("variety", "").strip()
+
+        if not variety:
+            return redirect(url_for("home"))
 
         conn = get_db_connection()
 
@@ -131,12 +320,13 @@ def add():
 
         return redirect(url_for("home"))
 
-    except (ValueError, KeyError):
+    except (ValueError, TypeError):
+
         return redirect(url_for("home"))
 
 
 # =========================================================
-# Delete Data
+# DELETE DATA
 # =========================================================
 
 @app.route("/delete/<int:id>")
@@ -159,107 +349,11 @@ def delete(id):
 
 
 # =========================================================
-# Predict Iris Species
-# =========================================================
-
-@app.route("/predict", methods=["POST"])
-def predict():
-
-    try:
-
-        # ---------------------------------------------
-        # Get input values
-        # ---------------------------------------------
-
-        sepal_length = float(
-            request.form["sepal_length"]
-        )
-
-        sepal_width = float(
-            request.form["sepal_width"]
-        )
-
-        petal_length = float(
-            request.form["petal_length"]
-        )
-
-        petal_width = float(
-            request.form["petal_width"]
-        )
-
-        # ---------------------------------------------
-        # ML Prediction
-        # ---------------------------------------------
-
-        result = model.predict([
-            [
-                sepal_length,
-                sepal_width,
-                petal_length,
-                petal_width
-            ]
-        ])[0]
-
-        # ---------------------------------------------
-        # Convert prediction to species name
-        # ---------------------------------------------
-
-        labels = [
-            "Setosa",
-            "Versicolor",
-            "Virginica"
-        ]
-
-        output = labels[int(result)]
-
-        # ---------------------------------------------
-        # Fetch database records
-        # ---------------------------------------------
-
-        conn = get_db_connection()
-
-        iris_data = conn.execute("""
-            SELECT *
-            FROM iris_data
-            ORDER BY id DESC
-        """).fetchall()
-
-        conn.close()
-
-        # ---------------------------------------------
-        # Render result
-        # ---------------------------------------------
-
-        return render_template(
-            "index.html",
-            iris_data=iris_data,
-            prediction=output
-        )
-
-    except (ValueError, KeyError, IndexError):
-
-        conn = get_db_connection()
-
-        iris_data = conn.execute("""
-            SELECT *
-            FROM iris_data
-            ORDER BY id DESC
-        """).fetchall()
-
-        conn.close()
-
-        return render_template(
-            "index.html",
-            iris_data=iris_data,
-            error="Please enter valid flower measurements."
-        )
-
-
-# =========================================================
-# Run Flask Application
+# RUN APPLICATION
 # =========================================================
 
 if __name__ == "__main__":
+
     app.run(
         debug=True,
         host="127.0.0.1",

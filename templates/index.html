@@ -1,887 +1,1583 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>IRIS AI | Botanical Intelligence</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <meta
         name="description"
-        content="AI-powered Iris flower classification using machine learning."
+        content="IRIS AI - AI-powered botanical classifier for Iris flower species prediction."
+    >
+
+    <meta name="theme-color" content="#17382f">
+
+    <title>IRIS AI | Botanical Classifier</title>
+
+    <!-- Google Fonts -->
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
     >
 
     <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
         rel="stylesheet"
-        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+    <!-- Main CSS -->
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
     >
 </head>
 
 <body>
 
-    <!-- ================= NAVBAR ================= -->
+<!-- =========================================================
+     NAVBAR
+========================================================= -->
 
-    <header class="navbar" id="navbar">
+<header
+    class="navbar"
+    id="navbar"
+>
 
-        <div class="nav-inner">
+    <div class="nav-inner">
 
-            <a href="#home" class="brand">
-                <span class="brand-mark">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </span>
+        <!-- Brand -->
+        <a
+            href="#home"
+            class="brand"
+            aria-label="IRIS AI Home"
+        >
 
-                <span>IRIS<span class="brand-accent">AI</span></span>
-            </a>
-
-            <nav class="nav-links" id="navLinks">
-                <a href="#home" class="active">Home</a>
-                <a href="#predict">Predict</a>
-                <a href="#species">Species</a>
-                <a href="#about">About</a>
-            </nav>
-
-            <a href="#predict" class="nav-cta">
-                Predict Now
-                <span>↗</span>
-            </a>
-
-            <button
-                class="menu-toggle"
-                id="menuToggle"
-                aria-label="Open navigation"
-                aria-expanded="false"
+            <span
+                class="brand-mark"
+                aria-hidden="true"
             >
                 <span></span>
                 <span></span>
-            </button>
+                <span></span>
+            </span>
+
+            <span>
+                IRIS <span class="brand-accent">AI</span>
+            </span>
+
+        </a>
+
+
+        <!-- Desktop Navigation -->
+        <nav
+            class="nav-links"
+            id="navLinks"
+            aria-label="Main navigation"
+        >
+
+            <a
+                href="#home"
+                class="active"
+            >
+                Home
+            </a>
+
+            <a href="#predict">
+                Predict
+            </a>
+
+            <a href="#species">
+                Species
+            </a>
+
+            <a href="#about">
+                About
+            </a>
+
+        </nav>
+
+
+        <!-- Navbar CTA -->
+        <a
+            href="#predict"
+            class="nav-cta"
+        >
+            Predict Now
+            <span aria-hidden="true">→</span>
+        </a>
+
+
+        <!-- Mobile Menu -->
+        <button
+            class="menu-toggle"
+            id="menuToggle"
+            type="button"
+            aria-label="Open navigation menu"
+            aria-expanded="false"
+            aria-controls="navLinks"
+        >
+
+            <span></span>
+            <span></span>
+            <span></span>
+
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<main>
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section
+    class="hero section"
+    id="home"
+>
+
+    <!-- Hero Content -->
+    <div class="hero-content reveal">
+
+        <div class="eyebrow">
+
+            <span
+                class="eyebrow-line"
+                aria-hidden="true"
+            ></span>
+
+            AI BOTANICAL CLASSIFIER
 
         </div>
 
-    </header>
+
+        <h1>
+            Discover the
+            <span class="highlight">
+                Beauty
+            </span>
+            of Every Iris.
+        </h1>
 
 
-    <main>
+        <p class="hero-description">
+            Explore the world of Iris flowers through machine
+            learning. Enter four simple flower measurements and
+            let our trained classification model identify the
+            species.
+        </p>
 
-        <!-- ================= HERO ================= -->
 
-        <section class="hero section" id="home">
+        <div class="hero-actions">
 
-            <div class="hero-content reveal">
+            <a
+                href="#predict"
+                class="button button-primary"
+            >
+                Start Prediction
 
-                <div class="eyebrow">
-                    <span class="eyebrow-line"></span>
-                    AI BOTANICAL CLASSIFIER
-                </div>
+                <span aria-hidden="true">
+                    →
+                </span>
+            </a>
 
-                <h1>
-                    Discover the
-                    <span class="highlight">Beauty</span>
-                    of Every Iris.
-                </h1>
 
-                <p class="hero-description">
-                    Identify Iris flower species using four simple
-                    measurements and a machine-learning model designed
-                    to recognize botanical patterns.
-                </p>
+            <a
+                href="#species"
+                class="button button-secondary"
+            >
+                Explore Iris Species
+            </a>
 
-                <div class="hero-actions">
+        </div>
 
-                    <a href="#predict" class="button button-primary">
-                        Start Prediction
-                        <span>→</span>
-                    </a>
 
-                    <a href="#species" class="button button-secondary">
-                        Explore Species
-                    </a>
+        <!-- Hero Stats -->
+        <div class="hero-stats">
 
-                </div>
+            <div class="stat">
 
-                <div class="hero-stats">
+                <strong>3</strong>
 
-                    <div class="stat">
-                        <strong>03</strong>
-                        <span>Species</span>
-                    </div>
-
-                    <div class="stat-divider"></div>
-
-                    <div class="stat">
-                        <strong>04</strong>
-                        <span>Measurements</span>
-                    </div>
-
-                    <div class="stat-divider"></div>
-
-                    <div class="stat">
-                        <strong>ML</strong>
-                        <span>Powered</span>
-                    </div>
-
-                </div>
+                <span>
+                    Species
+                </span>
 
             </div>
 
 
-            <!-- CSS BOTANICAL ART -->
-
-            <div class="hero-art reveal">
-
-                <div class="specimen-label label-top">
-                    <span>SPECIMEN</span>
-                    IRIS / 001
-                </div>
-
-                <div class="orbit orbit-one"></div>
-                <div class="orbit orbit-two"></div>
-                <div class="orbit orbit-three"></div>
-
-                <div class="measurement-point point-one">
-                    <span></span>
-                    <small>PETAL</small>
-                </div>
-
-                <div class="measurement-point point-two">
-                    <span></span>
-                    <small>FORM</small>
-                </div>
-
-                <div class="botanical-art">
-
-                    <div class="stem"></div>
-
-                    <div class="leaf leaf-left"></div>
-                    <div class="leaf leaf-right"></div>
-
-                    <div class="flower">
-
-                        <div class="petal petal-back-left"></div>
-                        <div class="petal petal-back-right"></div>
-
-                        <div class="petal petal-top"></div>
-
-                        <div class="petal petal-front-left"></div>
-                        <div class="petal petal-front-right"></div>
-
-                        <div class="flower-center">
-                            <span></span>
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="specimen-label label-bottom">
-                    <span>BOTANICAL</span>
-                    IDENTIFICATION
-                </div>
-
-            </div>
-
-        </section>
+            <div
+                class="stat-divider"
+                aria-hidden="true"
+            ></div>
 
 
-        <!-- ================= PREDICT ================= -->
+            <div class="stat">
 
-        <section class="prediction section" id="predict">
+                <strong>4</strong>
 
-            <div class="section-header reveal">
-
-                <div class="eyebrow">
-                    <span class="eyebrow-line"></span>
-                    MACHINE LEARNING
-                </div>
-
-                <h2>Identify Your <span>Iris.</span></h2>
-
-                <p>
-                    Enter four measurements and let the trained model
-                    determine the flower species.
-                </p>
+                <span>
+                    Measurements
+                </span>
 
             </div>
 
 
-            <div class="prediction-layout">
+            <div
+                class="stat-divider"
+                aria-hidden="true"
+            ></div>
 
-                <!-- FORM -->
 
-                <div class="prediction-card reveal">
+            <div class="stat">
 
-                    <div class="card-top">
+                <strong>ML</strong>
 
-                        <div>
-                            <span class="card-number">01</span>
+                <span>
+                    Powered
+                </span>
 
-                            <h3>
-                                Flower Measurements
-                            </h3>
-                        </div>
+            </div>
 
-                        <span class="unit-note">
-                            ALL VALUES IN CM
-                        </span>
+        </div>
 
-                    </div>
+    </div>
 
 
-                    <form
-                        action="{{ url_for('predict') }}"
-                        method="POST"
-                        id="prediction-form"
-                    >
+    <!-- Hero Visual -->
+    <div
+        class="hero-art reveal"
+        aria-label="Iris flower botanical visual"
+    >
 
-                        <div class="input-grid">
+        <div
+            class="orbit orbit-one"
+            aria-hidden="true"
+        ></div>
 
-                            <div class="input-group">
+        <div
+            class="orbit orbit-two"
+            aria-hidden="true"
+        ></div>
 
-                                <label for="sepal_length">
-                                    <span>01</span>
-                                    Sepal Length
-                                </label>
+        <div
+            class="orbit orbit-three"
+            aria-hidden="true"
+        ></div>
 
-                                <div class="input-box">
 
-                                    <input
-                                        type="number"
-                                        id="sepal_length"
-                                        name="sepal_length"
-                                        min="0"
-                                        max="20"
-                                        step="0.1"
-                                        placeholder="5.1"
-                                        required
-                                    >
+        <!-- Real local flower image -->
+        <div class="botanical-art">
 
-                                    <span>cm</span>
+            <img
+                src="{{ url_for('static', filename='images/iris-hero.jpg') }}"
+                alt="Realistic Iris flower"
+                width="600"
+                height="700"
+                loading="eager"
+                decoding="async"
+                style="
+                    width:100%;
+                    height:100%;
+                    object-fit:cover;
+                    border-radius:50% 50% 45% 45%;
+                    box-shadow:0 30px 80px rgba(23,56,47,.18);
+                "
+            >
 
-                                </div>
+        </div>
 
-                            </div>
 
+        <!-- Botanical labels -->
 
-                            <div class="input-group">
+        <div class="specimen-label label-top">
 
-                                <label for="sepal_width">
-                                    <span>02</span>
-                                    Sepal Width
-                                </label>
+            <span>
+                SPECIMEN
+            </span>
 
-                                <div class="input-box">
+            IRIS / BOTANICA
 
-                                    <input
-                                        type="number"
-                                        id="sepal_width"
-                                        name="sepal_width"
-                                        min="0"
-                                        max="20"
-                                        step="0.1"
-                                        placeholder="3.5"
-                                        required
-                                    >
+        </div>
 
-                                    <span>cm</span>
 
-                                </div>
+        <div class="specimen-label label-bottom">
 
-                            </div>
+            <span>
+                CLASSIFICATION
+            </span>
 
+            ML-IRIS-001
 
-                            <div class="input-group">
+        </div>
 
-                                <label for="petal_length">
-                                    <span>03</span>
-                                    Petal Length
-                                </label>
 
-                                <div class="input-box">
+        <div class="measurement-point point-one">
 
-                                    <input
-                                        type="number"
-                                        id="petal_length"
-                                        name="petal_length"
-                                        min="0"
-                                        max="20"
-                                        step="0.1"
-                                        placeholder="1.4"
-                                        required
-                                    >
+            <span aria-hidden="true"></span>
 
-                                    <span>cm</span>
+            PETAL
 
-                                </div>
+        </div>
 
-                            </div>
 
+        <div class="measurement-point point-two">
 
-                            <div class="input-group">
+            <span aria-hidden="true"></span>
 
-                                <label for="petal_width">
-                                    <span>04</span>
-                                    Petal Width
-                                </label>
+            SEPAL
 
-                                <div class="input-box">
+        </div>
 
-                                    <input
-                                        type="number"
-                                        id="petal_width"
-                                        name="petal_width"
-                                        min="0"
-                                        max="20"
-                                        step="0.1"
-                                        placeholder="0.2"
-                                        required
-                                    >
+    </div>
 
-                                    <span>cm</span>
+</section>
 
-                                </div>
 
-                            </div>
+<!-- =========================================================
+     PREDICTION SECTION
+========================================================= -->
 
-                        </div>
+<section
+    class="prediction"
+    id="predict"
+>
 
+    <div class="section">
 
-                        <button
-                            type="submit"
-                            class="predict-button"
-                            id="predictButton"
-                        >
-                            <span class="button-text">
-                                Predict Iris Species
-                            </span>
+        <!-- Section Heading -->
+        <div class="section-header reveal">
 
-                            <span class="button-loader"></span>
+            <div class="eyebrow">
 
-                            <span class="button-arrow">
-                                →
-                            </span>
-                        </button>
+                <span
+                    class="eyebrow-line"
+                    aria-hidden="true"
+                ></span>
 
-                    </form>
+                PREDICTION LAB
 
-                </div>
+            </div>
 
 
-                <!-- RESULT -->
+            <h2>
+                Identify Your
+                <span>Iris.</span>
+            </h2>
 
-                <div
-                    class="result-card {% if prediction %}has-result{% endif %} reveal"
-                    aria-live="polite"
-                >
 
-                    {% if prediction %}
+            <p>
+                Enter the flower measurements below and let the
+                trained machine-learning model identify the Iris
+                species.
+            </p>
 
-                    <div class="result-success">
+        </div>
 
-                        <div class="result-header">
 
-                            <span class="result-status">
-                                <span></span>
-                                PREDICTION COMPLETE
-                            </span>
+        <!-- Prediction Layout -->
+        <div class="prediction-layout">
 
-                            <span class="result-code">
-                                ML / 001
-                            </span>
+            <!-- =========================================
+                 INPUT CARD
+            ========================================== -->
 
-                        </div>
+            <div class="prediction-card reveal">
 
+                <div class="card-top">
 
-                        <div class="result-flower">
+                    <div>
 
-                            <div class="mini-flower">
-
-                                <span class="mini-petal p1"></span>
-                                <span class="mini-petal p2"></span>
-                                <span class="mini-petal p3"></span>
-                                <span class="mini-petal p4"></span>
-                                <span class="mini-center"></span>
-
-                            </div>
-
-                        </div>
-
-
-                        <span class="result-label">
-                            YOUR IRIS IS
-                        </span>
-
-                        <h2>
-                            Iris {{ prediction }}
-                        </h2>
-
-
-                        <p class="result-description">
-
-                            {% if prediction == "Setosa" %}
-
-                            A compact species characterized by
-                            relatively short petals and a distinctive
-                            delicate botanical structure.
-
-                            {% elif prediction == "Versicolor" %}
-
-                            A graceful Iris species known for its
-                            balanced floral structure and characteristic
-                            variation.
-
-                            {% elif prediction == "Virginica" %}
-
-                            A larger Iris species with prominent petals
-                            and an elegant botanical structure.
-
-                            {% else %}
-
-                            The trained model classified this specimen
-                            as Iris {{ prediction }}.
-
-                            {% endif %}
-
-                        </p>
-
-
-                        {% if measurements %}
-
-                        <div class="measurement-profile">
-
-                            <div class="profile-heading">
-                                <span>MEASUREMENT PROFILE</span>
-                                <span>CM</span>
-                            </div>
-
-                            <div class="profile-row">
-                                <span>Sepal Length</span>
-                                <strong>
-                                    {{ measurements.sepal_length }}
-                                </strong>
-                            </div>
-
-                            <div class="profile-row">
-                                <span>Sepal Width</span>
-                                <strong>
-                                    {{ measurements.sepal_width }}
-                                </strong>
-                            </div>
-
-                            <div class="profile-row">
-                                <span>Petal Length</span>
-                                <strong>
-                                    {{ measurements.petal_length }}
-                                </strong>
-                            </div>
-
-                            <div class="profile-row">
-                                <span>Petal Width</span>
-                                <strong>
-                                    {{ measurements.petal_width }}
-                                </strong>
-                            </div>
-
-                        </div>
-
-                        {% endif %}
-
-                    </div>
-
-                    {% else %}
-
-                    <div class="empty-result">
-
-                        <div class="empty-orbit">
-
-                            <div class="empty-flower">
-
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                                <i></i>
-
-                            </div>
-
-                        </div>
-
-                        <span class="empty-label">
-                            AWAITING SPECIMEN
+                        <span class="card-number">
+                            STEP 01 / MEASURE
                         </span>
 
                         <h3>
-                            Your Iris awaits discovery.
+                            Flower Measurements
                         </h3>
 
-                        <p>
-                            Enter the four measurements to reveal
-                            the predicted species.
-                        </p>
+                    </div>
+
+
+                    <span class="unit-note">
+                        ALL VALUES IN CM
+                    </span>
+
+                </div>
+
+
+                <!--
+                    IMPORTANT:
+                    This form submits to Flask /predict.
+                    JavaScript does NOT perform prediction.
+                -->
+
+                <form
+                    action="{{ url_for('predict') }}"
+                    method="POST"
+                    id="prediction-form"
+                    novalidate
+                >
+
+                    <div class="input-grid">
+
+                        <!-- Sepal Length -->
+                        <div class="input-group">
+
+                            <label for="sepal_length">
+
+                                Sepal Length
+
+                                <span>
+                                    REQUIRED
+                                </span>
+
+                            </label>
+
+
+                            <div class="input-box">
+
+                                <input
+                                    type="number"
+                                    id="sepal_length"
+                                    name="sepal_length"
+                                    placeholder="e.g. 5.1"
+                                    min="0"
+                                    max="20"
+                                    step="0.1"
+                                    inputmode="decimal"
+                                    required
+                                    autocomplete="off"
+                                    aria-describedby="sepal-length-unit"
+                                >
+
+                                <span id="sepal-length-unit">
+                                    cm
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Sepal Width -->
+                        <div class="input-group">
+
+                            <label for="sepal_width">
+
+                                Sepal Width
+
+                                <span>
+                                    REQUIRED
+                                </span>
+
+                            </label>
+
+
+                            <div class="input-box">
+
+                                <input
+                                    type="number"
+                                    id="sepal_width"
+                                    name="sepal_width"
+                                    placeholder="e.g. 3.5"
+                                    min="0"
+                                    max="20"
+                                    step="0.1"
+                                    inputmode="decimal"
+                                    required
+                                    autocomplete="off"
+                                    aria-describedby="sepal-width-unit"
+                                >
+
+                                <span id="sepal-width-unit">
+                                    cm
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Petal Length -->
+                        <div class="input-group">
+
+                            <label for="petal_length">
+
+                                Petal Length
+
+                                <span>
+                                    REQUIRED
+                                </span>
+
+                            </label>
+
+
+                            <div class="input-box">
+
+                                <input
+                                    type="number"
+                                    id="petal_length"
+                                    name="petal_length"
+                                    placeholder="e.g. 1.4"
+                                    min="0"
+                                    max="20"
+                                    step="0.1"
+                                    inputmode="decimal"
+                                    required
+                                    autocomplete="off"
+                                    aria-describedby="petal-length-unit"
+                                >
+
+                                <span id="petal-length-unit">
+                                    cm
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Petal Width -->
+                        <div class="input-group">
+
+                            <label for="petal_width">
+
+                                Petal Width
+
+                                <span>
+                                    REQUIRED
+                                </span>
+
+                            </label>
+
+
+                            <div class="input-box">
+
+                                <input
+                                    type="number"
+                                    id="petal_width"
+                                    name="petal_width"
+                                    placeholder="e.g. 0.2"
+                                    min="0"
+                                    max="20"
+                                    step="0.1"
+                                    inputmode="decimal"
+                                    required
+                                    autocomplete="off"
+                                    aria-describedby="petal-width-unit"
+                                >
+
+                                <span id="petal-width-unit">
+                                    cm
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Error Message -->
+
+                    {% if error %}
+
+                    <div
+                        class="form-message form-error"
+                        role="alert"
+                        aria-live="polite"
+                    >
+
+                        {{ error }}
 
                     </div>
 
                     {% endif %}
 
-                </div>
 
-            </div>
+                    <!-- Predict Button -->
 
-        </section>
+                    <button
+                        type="submit"
+                        class="predict-button"
+                        id="predictButton"
+                    >
 
-
-        <!-- ================= SPECIES ================= -->
-
-        <section class="species section" id="species">
-
-            <div class="section-header reveal">
-
-                <div class="eyebrow">
-                    <span class="eyebrow-line"></span>
-                    THE IRIS FAMILY
-                </div>
-
-                <h2>
-                    Three Species.
-                    <span>One Model.</span>
-                </h2>
-
-                <p>
-                    Explore the botanical characteristics behind
-                    the classification task.
-                </p>
-
-            </div>
-
-
-            <div class="species-grid">
-
-                <!-- SETOSA -->
-
-                <article class="species-card reveal">
-
-                    <div class="species-number">
-                        01
-                    </div>
-
-                    <div class="species-art setosa-art">
-
-                        <span class="s-petal s1"></span>
-                        <span class="s-petal s2"></span>
-                        <span class="s-petal s3"></span>
-                        <span class="s-petal s4"></span>
-                        <span class="s-center"></span>
-
-                    </div>
-
-                    <div class="species-info">
-
-                        <span class="species-type">
-                            SPECIES / SETOSA
+                        <span
+                            class="button-text"
+                        >
+                            Predict Iris Species
                         </span>
 
-                        <h3>Iris Setosa</h3>
 
-                        <p>
-                            A compact Iris species with shorter petals
-                            and a distinctive floral structure.
-                        </p>
-
-                        <div class="species-meta">
-                            <span>Compact</span>
-                            <span>Delicate</span>
-                        </div>
-
-                    </div>
-
-                </article>
+                        <span
+                            class="button-loader"
+                            aria-hidden="true"
+                        ></span>
 
 
-                <!-- VERSICOLOR -->
-
-                <article class="species-card reveal">
-
-                    <div class="species-number">
-                        02
-                    </div>
-
-                    <div class="species-art versicolor-art">
-
-                        <span class="v-petal v1"></span>
-                        <span class="v-petal v2"></span>
-                        <span class="v-petal v3"></span>
-                        <span class="v-petal v4"></span>
-                        <span class="v-petal v5"></span>
-                        <span class="v-center"></span>
-
-                    </div>
-
-                    <div class="species-info">
-
-                        <span class="species-type">
-                            SPECIES / VERSICOLOR
+                        <span
+                            class="button-arrow"
+                            aria-hidden="true"
+                        >
+                            →
                         </span>
 
-                        <h3>Iris Versicolor</h3>
+                    </button>
 
-                        <p>
-                            Recognized for its elegant proportions
-                            and characteristic floral variation.
-                        </p>
+                </form>
 
-                        <div class="species-meta">
-                            <span>Balanced</span>
-                            <span>Elegant</span>
+            </div>
+
+
+            <!-- =========================================
+                 RESULT CARD
+            ========================================== -->
+
+            <div
+                class="result-card reveal"
+                aria-live="polite"
+            >
+
+                {% if prediction %}
+
+                <!-- =====================================
+                     SUCCESS RESULT
+                ====================================== -->
+
+                <div class="result-success">
+
+                    <div class="result-header">
+
+                        <div class="result-status">
+
+                            <span aria-hidden="true"></span>
+
+                            PREDICTION COMPLETE
+
                         </div>
 
-                    </div>
 
-                </article>
-
-
-                <!-- VIRGINICA -->
-
-                <article class="species-card reveal">
-
-                    <div class="species-number">
-                        03
-                    </div>
-
-                    <div class="species-art virginica-art">
-
-                        <span class="g-petal g1"></span>
-                        <span class="g-petal g2"></span>
-                        <span class="g-petal g3"></span>
-                        <span class="g-petal g4"></span>
-                        <span class="g-petal g5"></span>
-                        <span class="g-center"></span>
-
-                    </div>
-
-                    <div class="species-info">
-
-                        <span class="species-type">
-                            SPECIES / VIRGINICA
+                        <span class="result-code">
+                            IRIS-ML
                         </span>
 
-                        <h3>Iris Virginica</h3>
+                    </div>
 
-                        <p>
-                            A larger Iris species with prominent petals
-                            and a graceful botanical form.
-                        </p>
 
-                        <div class="species-meta">
-                            <span>Prominent</span>
-                            <span>Graceful</span>
-                        </div>
+                    <!-- Result Flower -->
+
+                    <div class="result-flower">
+
+                        {% set species_name = prediction|lower %}
+
+                        {% if 'setosa' in species_name %}
+
+                        <img
+                            src="{{ url_for('static', filename='images/setosa.webp') }}"
+                            alt="Iris Setosa flower"
+                            width="220"
+                            height="220"
+                            loading="eager"
+                            decoding="async"
+                            style="
+                                width:180px;
+                                height:180px;
+                                object-fit:cover;
+                                border-radius:50%;
+                                box-shadow:0 20px 50px rgba(23,56,47,.15);
+                            "
+                        >
+
+                        {% elif 'versicolor' in species_name %}
+
+                        <img
+                            src="{{ url_for('static', filename='images/versicolor.jpg') }}"
+                            alt="Iris Versicolor flower"
+                            width="220"
+                            height="220"
+                            loading="eager"
+                            decoding="async"
+                            style="
+                                width:180px;
+                                height:180px;
+                                object-fit:cover;
+                                border-radius:50%;
+                                box-shadow:0 20px 50px rgba(23,56,47,.15);
+                            "
+                        >
+
+                        {% elif 'virginica' in species_name %}
+
+                        <img
+                            src="{{ url_for('static', filename='images/virginica.jpg') }}"
+                            alt="Iris Virginica flower"
+                            width="220"
+                            height="220"
+                            loading="eager"
+                            decoding="async"
+                            style="
+                                width:180px;
+                                height:180px;
+                                object-fit:cover;
+                                border-radius:50%;
+                                box-shadow:0 20px 50px rgba(23,56,47,.15);
+                            "
+                        >
+
+                        {% else %}
+
+                        <img
+                            src="{{ url_for('static', filename='images/iris-hero.jpg') }}"
+                            alt="Iris flower"
+                            width="220"
+                            height="220"
+                            loading="eager"
+                            decoding="async"
+                            style="
+                                width:180px;
+                                height:180px;
+                                object-fit:cover;
+                                border-radius:50%;
+                                box-shadow:0 20px 50px rgba(23,56,47,.15);
+                            "
+                        >
+
+                        {% endif %}
 
                     </div>
 
-                </article>
 
-            </div>
+                    <span class="result-label">
+                        IDENTIFIED SPECIES
+                    </span>
 
-        </section>
+
+                    <h2>
+                        Iris {{ prediction }}
+                    </h2>
 
 
-        <!-- ================= ABOUT ================= -->
+                    <!-- Species Description -->
 
-        <section class="about section" id="about">
+                    {% if 'Setosa' in prediction %}
 
-            <div class="about-visual reveal">
+                    <p class="result-description">
+                        Iris Setosa is a compact Iris species
+                        recognized for its distinctive flowers
+                        and relatively short petals.
+                    </p>
 
-                <span class="about-ring ring-one"></span>
-                <span class="about-ring ring-two"></span>
+                    {% elif 'Versicolor' in prediction %}
 
-                <div class="about-symbol">
+                    <p class="result-description">
+                        Iris Versicolor is known for its elegant
+                        flowers and characteristic combination
+                        of purple and blue tones.
+                    </p>
 
-                    <span class="symbol-petal"></span>
-                    <span class="symbol-petal"></span>
-                    <span class="symbol-petal"></span>
-                    <span class="symbol-petal"></span>
-                    <i></i>
+                    {% elif 'Virginica' in prediction %}
+
+                    <p class="result-description">
+                        Iris Virginica is a larger Iris species
+                        known for its graceful flowers and
+                        distinctive natural variation.
+                    </p>
+
+                    {% else %}
+
+                    <p class="result-description">
+                        The machine-learning model identified
+                        this Iris species from the measurements
+                        you provided.
+                    </p>
+
+                    {% endif %}
+
+
+                    <!-- Measurement Profile -->
+
+                    <div class="measurement-profile">
+
+                        <div class="profile-heading">
+
+                            <span>
+                                MEASUREMENT
+                            </span>
+
+                            <span>
+                                VALUE
+                            </span>
+
+                        </div>
+
+
+                        <div class="profile-row">
+
+                            <span>
+                                Sepal Length
+                            </span>
+
+                            <strong>
+                                {{ request.form.get('sepal_length', '-') }} cm
+                            </strong>
+
+                        </div>
+
+
+                        <div class="profile-row">
+
+                            <span>
+                                Sepal Width
+                            </span>
+
+                            <strong>
+                                {{ request.form.get('sepal_width', '-') }} cm
+                            </strong>
+
+                        </div>
+
+
+                        <div class="profile-row">
+
+                            <span>
+                                Petal Length
+                            </span>
+
+                            <strong>
+                                {{ request.form.get('petal_length', '-') }} cm
+                            </strong>
+
+                        </div>
+
+
+                        <div class="profile-row">
+
+                            <span>
+                                Petal Width
+                            </span>
+
+                            <strong>
+                                {{ request.form.get('petal_width', '-') }} cm
+                            </strong>
+
+                        </div>
+
+                    </div>
 
                 </div>
 
-            </div>
 
+                {% else %}
 
-            <div class="about-content reveal">
+                <!-- =====================================
+                     EMPTY RESULT
+                ====================================== -->
 
-                <div class="eyebrow">
-                    <span class="eyebrow-line"></span>
-                    THE SYSTEM
-                </div>
+                <div class="empty-result">
 
-                <h2>
-                    Where Machine Learning
-                    <span>Meets Botany.</span>
-                </h2>
+                    <div
+                        class="empty-orbit"
+                        aria-hidden="true"
+                    >
 
-                <p>
-                    This application uses a trained machine-learning
-                    model to classify Iris flowers based on four
-                    measurable characteristics.
-                </p>
+                        <div class="empty-flower">
 
-                <div class="feature-list">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
 
-                    <div class="feature">
-                        <span>01</span>
-                        <div>
-                            <strong>Sepal Length</strong>
-                            <small>Flower measurement</small>
+                            <i></i>
+
                         </div>
+
                     </div>
 
-                    <div class="feature">
-                        <span>02</span>
-                        <div>
-                            <strong>Sepal Width</strong>
-                            <small>Flower measurement</small>
-                        </div>
-                    </div>
 
-                    <div class="feature">
-                        <span>03</span>
-                        <div>
-                            <strong>Petal Length</strong>
-                            <small>Flower measurement</small>
-                        </div>
-                    </div>
+                    <span class="empty-label">
+                        AWAITING SPECIMEN
+                    </span>
 
-                    <div class="feature">
-                        <span>04</span>
-                        <div>
-                            <strong>Petal Width</strong>
-                            <small>Flower measurement</small>
-                        </div>
-                    </div>
+
+                    <h3>
+                        Your prediction will appear here.
+                    </h3>
+
+
+                    <p>
+                        Enter the four flower measurements
+                        and run the classifier to identify
+                        the Iris species.
+                    </p>
 
                 </div>
 
-            </div>
-
-        </section>
-
-
-        <!-- ================= HISTORY ================= -->
-
-        {% if iris_data %}
-
-        <section class="history section">
-
-            <div class="section-header reveal">
-
-                <div class="eyebrow">
-                    <span class="eyebrow-line"></span>
-                    PREDICTION HISTORY
-                </div>
-
-                <h2>
-                    Previous <span>Specimens.</span>
-                </h2>
+                {% endif %}
 
             </div>
-
-
-            <div class="history-table-wrap reveal">
-
-                <table class="history-table">
-
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Sepal</th>
-                            <th>Petal</th>
-                            <th>Species</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-
-                        {% for row in iris_data %}
-
-                        <tr>
-
-                            <td>#{{ row[0] }}</td>
-
-                            <td>
-                                {{ row[1] }} × {{ row[2] }}
-                            </td>
-
-                            <td>
-                                {{ row[3] }} × {{ row[4] }}
-                            </td>
-
-                            <td>
-                                <span class="species-badge">
-                                    {{ row[5] }}
-                                </span>
-                            </td>
-
-                            <td>
-                                <a
-                                    href="{{ url_for('delete', id=row[0]) }}"
-                                    class="delete-link"
-                                >
-                                    Remove
-                                </a>
-                            </td>
-
-                        </tr>
-
-                        {% endfor %}
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        </section>
-
-        {% endif %}
-
-    </main>
-
-
-    <!-- ================= FOOTER ================= -->
-
-    <footer>
-
-        <div class="footer-inner">
-
-            <a href="#home" class="brand">
-                <span class="brand-mark">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </span>
-
-                IRIS<span class="brand-accent">AI</span>
-            </a>
-
-            <p>
-                Machine learning meets botanical discovery.
-            </p>
-
-            <span class="footer-code">
-                FLASK / ML / IRIS
-            </span>
 
         </div>
 
-    </footer>
+    </div>
+
+</section>
 
 
-    <script
-        src="{{ url_for('static', filename='script.js') }}"
-    ></script>
+<!-- =========================================================
+     SPECIES SECTION
+========================================================= -->
+
+<section
+    class="species"
+    id="species"
+>
+
+    <div class="section">
+
+        <div class="section-header reveal">
+
+            <div class="eyebrow">
+
+                <span
+                    class="eyebrow-line"
+                    aria-hidden="true"
+                ></span>
+
+                IRIS COLLECTION
+
+            </div>
+
+
+            <h2>
+                Meet the
+                <span>Iris Family.</span>
+            </h2>
+
+
+            <p>
+                Three species. Four measurements. One classic
+                machine-learning classification problem.
+            </p>
+
+        </div>
+
+
+        <div class="species-grid">
+
+
+            <!-- =====================================
+                 SETOSA
+            ====================================== -->
+
+            <article class="species-card reveal">
+
+                <span class="species-number">
+                    01
+                </span>
+
+
+                <div class="species-art">
+
+                    <img
+                        src="{{ url_for('static', filename='images/setosa.webp') }}"
+                        alt="Iris Setosa flower"
+                        width="300"
+                        height="300"
+                        loading="lazy"
+                        decoding="async"
+                        style="
+                            width:100%;
+                            height:100%;
+                            object-fit:cover;
+                            border-radius:50%;
+                        "
+                    >
+
+                </div>
+
+
+                <div class="species-info">
+
+                    <span class="species-type">
+                        SPECIES
+                    </span>
+
+
+                    <h3>
+                        Iris Setosa
+                    </h3>
+
+
+                    <p>
+                        A distinctive Iris species with
+                        compact flowers and characteristic
+                        proportions that make it readily
+                        distinguishable in the classic Iris
+                        dataset.
+                    </p>
+
+
+                    <div class="species-meta">
+
+                        <span>
+                            Compact
+                        </span>
+
+                        <span>
+                            Distinctive
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- =====================================
+                 VERSICOLOR
+            ====================================== -->
+
+            <article class="species-card reveal">
+
+                <span class="species-number">
+                    02
+                </span>
+
+
+                <div class="species-art">
+
+                    <img
+                        src="{{ url_for('static', filename='images/versicolor.jpg') }}"
+                        alt="Iris Versicolor flower"
+                        width="300"
+                        height="300"
+                        loading="lazy"
+                        decoding="async"
+                        style="
+                            width:100%;
+                            height:100%;
+                            object-fit:cover;
+                            border-radius:50%;
+                        "
+                    >
+
+                </div>
+
+
+                <div class="species-info">
+
+                    <span class="species-type">
+                        SPECIES
+                    </span>
+
+
+                    <h3>
+                        Iris Versicolor
+                    </h3>
+
+
+                    <p>
+                        Recognized for its elegant flower
+                        structure and intermediate measurement
+                        profile within the classic Iris dataset.
+                    </p>
+
+
+                    <div class="species-meta">
+
+                        <span>
+                            Elegant
+                        </span>
+
+                        <span>
+                            Balanced
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- =====================================
+                 VIRGINICA
+            ====================================== -->
+
+            <article class="species-card reveal">
+
+                <span class="species-number">
+                    03
+                </span>
+
+
+                <div class="species-art">
+
+                    <img
+                        src="{{ url_for('static', filename='images/virginica.jpg') }}"
+                        alt="Iris Virginica flower"
+                        width="300"
+                        height="300"
+                        loading="lazy"
+                        decoding="async"
+                        style="
+                            width:100%;
+                            height:100%;
+                            object-fit:cover;
+                            border-radius:50%;
+                        "
+                    >
+
+                </div>
+
+
+                <div class="species-info">
+
+                    <span class="species-type">
+                        SPECIES
+                    </span>
+
+
+                    <h3>
+                        Iris Virginica
+                    </h3>
+
+
+                    <p>
+                        A larger Iris species with measurements
+                        that form a distinctive profile in the
+                        machine-learning dataset.
+                    </p>
+
+
+                    <div class="species-meta">
+
+                        <span>
+                            Larger
+                        </span>
+
+                        <span>
+                            Distinctive
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     ABOUT SECTION
+========================================================= -->
+
+<section
+    class="about section"
+    id="about"
+>
+
+    <!-- About Visual -->
+
+    <div
+        class="about-visual reveal"
+        aria-hidden="true"
+    >
+
+        <div class="about-ring ring-one"></div>
+
+        <div class="about-ring ring-two"></div>
+
+
+        <div class="about-symbol">
+
+            <img
+                src="{{ url_for('static', filename='images/iris-hero.jpg') }}"
+                alt=""
+                width="300"
+                height="300"
+                loading="lazy"
+                decoding="async"
+                style="
+                    width:150px;
+                    height:150px;
+                    object-fit:cover;
+                    border-radius:50%;
+                    box-shadow:0 20px 50px rgba(23,56,47,.14);
+                "
+            >
+
+        </div>
+
+    </div>
+
+
+    <!-- About Content -->
+
+    <div class="about-content reveal">
+
+        <div class="eyebrow">
+
+            <span
+                class="eyebrow-line"
+                aria-hidden="true"
+            ></span>
+
+            ABOUT IRIS AI
+
+        </div>
+
+
+        <h2>
+            Where
+            <span>Botany</span>
+            Meets Machine Learning.
+        </h2>
+
+
+        <p>
+            IRIS AI is a simple machine-learning application
+            built around the classic Iris flower classification
+            problem. The application takes four numerical flower
+            measurements and sends them to the trained model for
+            species prediction.
+        </p>
+
+
+        <div class="feature-list">
+
+            <div class="feature">
+
+                <span>
+                    01
+                </span>
+
+                <div>
+
+                    <strong>
+                        Four Inputs
+                    </strong>
+
+                    <small>
+                        Sepal and petal measurements
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="feature">
+
+                <span>
+                    02
+                </span>
+
+                <div>
+
+                    <strong>
+                        ML Classification
+                    </strong>
+
+                    <small>
+                        Prediction through your trained model
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="feature">
+
+                <span>
+                    03
+                </span>
+
+                <div>
+
+                    <strong>
+                        Three Species
+                    </strong>
+
+                    <small>
+                        Setosa, Versicolor and Virginica
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="feature">
+
+                <span>
+                    04
+                </span>
+
+                <div>
+
+                    <strong>
+                        Flask Backend
+                    </strong>
+
+                    <small>
+                        Python-powered prediction workflow
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     PREDICTION HISTORY
+========================================================= -->
+
+<section
+    class="history section"
+    id="history"
+>
+
+    <div class="section-header reveal">
+
+        <div class="eyebrow">
+
+            <span
+                class="eyebrow-line"
+                aria-hidden="true"
+            ></span>
+
+            DATABASE
+
+        </div>
+
+
+        <h2>
+            Prediction
+            <span>History.</span>
+        </h2>
+
+
+        <p>
+            Previously stored Iris measurements from the
+            application's SQLite database.
+        </p>
+
+    </div>
+
+
+    <div class="history-table-wrap reveal">
+
+        {% if iris_data %}
+
+        <table class="history-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        ID
+                    </th>
+
+                    <th>
+                        SEPAL LENGTH
+                    </th>
+
+                    <th>
+                        SEPAL WIDTH
+                    </th>
+
+                    <th>
+                        PETAL LENGTH
+                    </th>
+
+                    <th>
+                        PETAL WIDTH
+                    </th>
+
+                    <th>
+                        VARIETY
+                    </th>
+
+                    <th>
+                        ACTION
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for row in iris_data %}
+
+                <tr>
+
+                    <td>
+                        {{ row["id"] }}
+                    </td>
+
+                    <td>
+                        {{ row["sepal_length"] }}
+                    </td>
+
+                    <td>
+                        {{ row["sepal_width"] }}
+                    </td>
+
+                    <td>
+                        {{ row["petal_length"] }}
+                    </td>
+
+                    <td>
+                        {{ row["petal_width"] }}
+                    </td>
+
+                    <td>
+
+                        <span class="species-badge">
+                            {{ row["variety"] }}
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        <a
+                            href="{{ url_for('delete', id=row['id']) }}"
+                            class="delete-link"
+                            onclick="return confirm('Delete this record?');"
+                        >
+                            Delete
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+        {% else %}
+
+        <div
+            style="
+                padding:60px 25px;
+                text-align:center;
+                color:var(--muted);
+            "
+        >
+
+            <strong>
+                No records available.
+            </strong>
+
+            <p style="margin-top:8px;">
+                Stored Iris data will appear here.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer>
+
+    <div class="footer-inner">
+
+        <a
+            href="#home"
+            class="brand"
+            aria-label="IRIS AI Home"
+        >
+
+            <span
+                class="brand-mark"
+                aria-hidden="true"
+            >
+
+                <span></span>
+                <span></span>
+                <span></span>
+
+            </span>
+
+            <span>
+                IRIS <span class="brand-accent">AI</span>
+            </span>
+
+        </a>
+
+
+        <p>
+            A botanical classification experience powered by
+            machine learning.
+        </p>
+
+
+        <span class="footer-code">
+            IRIS / ML / FLASK
+        </span>
+
+    </div>
+
+</footer>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script
+    src="{{ url_for('static', filename='js/main.js') }}"
+    defer
+></script>
 
 </body>
-
 </html>
